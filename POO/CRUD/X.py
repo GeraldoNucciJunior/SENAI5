@@ -1,35 +1,23 @@
-
-
 import sys
-
 
 from database import Database
 
-from PyQt6.QtWidgets import  (
+from PyQt6.QtWidgets import (
     QApplication,
-    QGridLayout,
-    QGroupBox,
-    QHBoxLayout,
-    QHeaderView,
-    QMainWindow,
+    QWidget,
     QLabel,
     QLineEdit,
-    QMessageBox,
     QPushButton,
-    QTableWidget,
-    QTableWidgetItem,
+    QFormLayout,
     QVBoxLayout,
-    QWidget)
+    QMessageBox
+)
+from PyQt6.QtCore import Qt
 
-class MainWindow(QMainWindow):
+class FormularioCadastro(QWidget):
     def __init__(self):
         super().__init__()
-        self.db = Database()
-        self.selected_id = none
-        self.setWindowTitle("CRUD")
-        self.resize(650,500)
         self.init_ui()
-        self.show()
 
     def init_ui(self):
         # Configurações da janela
@@ -68,9 +56,24 @@ class MainWindow(QMainWindow):
 
         self.setLayout(layout_principal)
 
+    def salvar_dados(self):
+        # Recupera os valores digitados
+        nome = self.txt_nome.text()
+        telefone = self.txt_telefone.text()
+        email = self.txt_email.text()
+
+        # Validação simples
+        if not nome or not telefone or not email:
+            QMessageBox.warning(self, "Aviso", "Por favor, preencha todos os campos!")
+            return
+
+        # Exibe uma mensagem de sucesso com os dados cadastrados
+        mensagem = f"Dados salvos com sucesso!\n\nNome: {nome}\nTelefone: {telefone}\nE-mail: {email}"
+        QMessageBox.information(self, "Sucesso", mensagem)
 
 
-
-
-
-
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    janela = FormularioCadastro()
+    janela.show()
+    sys.exit(app.exec())

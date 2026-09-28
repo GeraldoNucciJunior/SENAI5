@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.db = Database()
-        self.selected_id = none
+        self.selected_id = None
         self.setWindowTitle("CRUD")
         self.resize(650,500)
         self.init_ui()
@@ -68,9 +68,28 @@ class MainWindow(QMainWindow):
 
         self.setLayout(layout_principal)
 
+    def salvar_dados(self):
+        # Recupera os valores digitados
+        nome = self.txt_nome.text()
+        telefone = self.txt_telefone.text()
+        email = self.txt_email.text()
+
+        # Validação simples
+        if not nome or not telefone or not email:
+            QMessageBox.warning(self, "Aviso", "Por favor, preencha todos os campos!")
+            return
+
+        # Exibe uma mensagem de sucesso com os dados cadastrados
+        mensagem = f"Dados salvos com sucesso!\n\nNome: {nome}\nTelefone: {telefone}\nE-mail: {email}"
+        QMessageBox.information(self, "Sucesso", mensagem)
 
 
 
 
 
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    janela = MainWindow()
+    janela.show()
+    sys.exit(app.exec())
 
